@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Project Proposal
-nav_order: 2
+parent: Home
+nav_order: 1
 ---
 
 # Project Proposal
