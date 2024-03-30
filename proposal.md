@@ -6,7 +6,16 @@ parent: Home
 
 # Project Proposal
 
-## Creating Painterly Renderings Using the Kuwahara and Voronoi Filter Techniques
+{: .no_toc }
+
+## Table of contents
+
+{: .no_toc .text-delta }
+
+1. TOC
+   {:toc}
+
+## Creating Painterly Renderings Using Different Filter Techniques
 
 By: Jonathan, Ayra, Jay, and Vanessa
 
