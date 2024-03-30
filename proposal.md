@@ -14,6 +14,7 @@ parent: Home
 {:toc}
 
 ## Creating Painterly Renderings Using Different Filter Techniques
+{: .no_toc }
 
 By: Jonathan, Ayra, Jay, and Vanessa
 
