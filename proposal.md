@@ -5,15 +5,13 @@ parent: Home
 ---
 
 # Project Proposal
-
 {: .no_toc }
 
 ## Table of contents
-
 {: .no_toc .text-delta }
 
 1. TOC
-   {:toc}
+{:toc}
 
 ## Creating Painterly Renderings Using Different Filter Techniques
 
@@ -47,12 +45,12 @@ Work on the final project deliverables, including webpage, presentation, and ima
 
 ## Resources
 
--   https://www.researchgate.net/publication/334689545_Oil_Painting_Style_Rendering_Based_on_Kuwahara_Filter
--   https://diglib.eg.org/bitstream/handle/10.2312/LocalChapterEvents.TPCG.TPCG10.025-030/025-030.pdf?sequence=1&isAllowed=y
--   https://www.kyprianidis.com/p/npar2011/jkyprian-npar2011.pdf
--   https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9106365
--   https://link.springer.com/article/10.1007/s11760-015-0791-3
+-   <https://www.researchgate.net/publication/334689545_Oil_Painting_Style_Rendering_Based_on_Kuwahara_Filter>
+-   <https://diglib.eg.org/bitstream/handle/10.2312/LocalChapterEvents.TPCG.TPCG10.025-030/025-030.pdf?sequence=1&isAllowed=y>
+-   <https://www.kyprianidis.com/p/npar2011/jkyprian-npar2011.pdf>
+-   <https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9106365>
+-   <https://link.springer.com/article/10.1007/s11760-015-0791-3>
 -   Painterly rendering
-    -   https://onlinelibrary.wiley.com/doi/full/10.1002/cav.1435
-    -   https://hal.science/hal-01342483/document
-    -   https://onlinelibrary.wiley.com/doi/full/10.1002/cav.1435
+    -   <https://onlinelibrary.wiley.com/doi/full/10.1002/cav.1435>
+    -   <https://hal.science/hal-01342483/document>
+    -   <https://onlinelibrary.wiley.com/doi/full/10.1002/cav.1435>
