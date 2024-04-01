@@ -10,7 +10,7 @@ parent: Home
 ## Table of contents
 {: .no_toc .text-delta }
 
--   TOC
+- TOC
     {:toc}
 
 ## Creating Painterly Renderings Using Different Filter Techniques
