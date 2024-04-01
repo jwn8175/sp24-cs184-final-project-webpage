@@ -10,13 +10,13 @@ parent: Home
 ## Table of contents
 {: .no_toc .text-delta }
 
-1. TOC
-{:toc}
+-   TOC
+    {:toc}
 
 ## Creating Painterly Renderings Using Different Filter Techniques
 {: .no_toc }
 
-By: Jonathan, Ayra, Jay, and Vanessa
+By: Jonathan, Ayra Jafri, Jay Ni, and Vanessa Qiu
 
 ## Summary
 
@@ -25,6 +25,8 @@ Given an input image, we will create an artistic, non-realistic rendering by app
 ## Problem Description
 
 ## Goals and Deliverables
+
+For our project, we plan to create a program that can take an input image, apply the Kuwahara filter and/or Voronoi filter to the image depending on what is specified, and output the result. We plan to have three different implementations of the Kuwahara filter: the square, circle, and anisotropic implementations, and the user will be able to specify which implementation of the Kuwahara filter they want applied. Shown below are some images that demonstrate what each filter and specific implementation should look like. The first image shows the original image of a bird. The next three images show square Kuwahara filtering, circle Kuwahara filtering, and anisotropic filtering applied on the original image, respectively. With our program, we hope to achieve these images. TODO: Jay needs to add images.
 
 ## Schedule
 
