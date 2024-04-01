@@ -11,7 +11,7 @@ parent: Home
 {: .no_toc .text-delta }
 
 - TOC
-    {:toc}
+{:toc}
 
 ## Creating Painterly Renderings Using Different Filter Techniques
 {: .no_toc }
