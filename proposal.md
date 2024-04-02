@@ -16,13 +16,15 @@ parent: Home
 # Creating Painterly Renderings Using Different Filter Techniques
 {: .no_toc }
 
-By: Jonathan, Ayra Jafri, Jay Ni, and Vanessa Qiu
+By: Jonathan Wang, Ayra Jafri, Jay Ni, and Vanessa Qiu
 
 ## Summary
 
 Given an input image, we will create an artistic, non-realistic rendering by applying the Kuwahara and Voronoi filters. We will compare the output quality between different implementations of these aforementioned filters and try to qualitatively determine which produce the best results.
 
 ## Problem Description
+
+For our final project, we wish to address the issue of rendering images and scenes in a painterly style without having to manually paint over models and/or scenes, and allow for this rendering to be at the very end of the rendering pipeline. In the production of 2.5D-styled shows and movies such as Arcane, Spider-Verse, and TMNT: Mutant Mayhem, a decent amount of the painterly effects achieved are done so by the methods mentioned above, and although these look incredibly charming, they are also very time-consuming and resource-intensive, both when rendering scenes and for artists and animators as well. Thus, we wish to address this by applying post-processing filters on rendered scenes to provide a quick-and-easy painterly effect. This will be done by implementing two (potentially three, if time permits) post-processing filters: the Kuwahara and Voronoi filters (and potentially a cel-shading filter).
 
 ## Goals and Deliverables
 
