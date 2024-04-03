@@ -28,8 +28,6 @@ For our final project, we wish to address the issue of rendering images and scen
 
 ## Goals and Deliverables
 
-### TODO: Jay needs to add images for this entire section!
-
 For our project, we plan to create a program that can take an input image, apply the Kuwahara filter and/or Voronoi filter to the image depending on what is specified, and output the result. We plan to have three different implementations of the Kuwahara filter: the square, circle, and anisotropic implementations, and the user will be able to specify which implementation of the Kuwahara filter they want applied. Shown below are some images that demonstrate what each filter and specific implementation should look like (the Kuwahara images are taken from Acerola’s YouTube video on Kuwahara filtering; the Voronoi images are taken from Affinity’s webpage on Voronoi filtering).
 
 For the Kuwahara images, the first image shows the original image of a bird with a cowboy hat. The next three images show square Kuwahara filtering, circle Kuwahara filtering, and anisotropic filtering applied on the original image, respectively.
@@ -131,7 +129,7 @@ Implement the Kuwahara filter, including the square, circle, and anisotrophic va
 
 ### Week 2
 
-Implement the Voronoi filter.
+Implement the Voronoi filter with Delauney triangulation, including the Euclidean, Manhattan, and Chebyshev distance metrics. Test out effectiveness of layering the Kuwahara filter.
 
 ### Week 3
 
@@ -160,6 +158,7 @@ Work on the final project deliverables, including webpage, presentation, and ima
     -   <https://www.cs.ubc.ca/%7Esheffa/dgp/ppts/crust.pdf>
     -   <https://www.cs.ucdavis.edu/%7Eamenta/pubs/crust.pdf>
     -   <https://affinity.help/photo/en-US.lproj/index.html?page=pages/Filters/filter_voronoi.html&title=Voronoi >
+    -   <https://thebookofshaders.com/12/>
 -   Cel-Shading:
     -   <https://raulreyesfinalproject.files.wordpress.com/2012/12/dissertation_cell-shading-raul_reyes_luque.pdf>
 -   Misc (if we need to use an alternate framework):
