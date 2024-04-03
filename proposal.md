@@ -99,7 +99,6 @@ For the Voronoi images, the first image shows some sort of metal ornament, and t
                             src="./assets/original.png"
                             width="300px"
                         />
-                        <figcaption>Original</figcaption>
                     </figure>
                 </div>
             </td>
@@ -110,7 +109,6 @@ For the Voronoi images, the first image shows some sort of metal ornament, and t
                             src="./assets/voronoi.png"
                             width="300px"
                         />
-                        <figcaption>Square</figcaption>
                     </figure>
                 </div>
             </td>
@@ -119,7 +117,129 @@ For the Voronoi images, the first image shows some sort of metal ornament, and t
     </table>
 </div>
 
-In order to test the functionality of our program, we will first apply the filters on the above bird image and metal ornament image and compare our program’s outputs to the above expected filtered images. These will serve as baseline tests to see if our filters are functioning as we expect. Then we will pass in additional images to each of the filters and compare our program’s outputs to the expected filtered images. Some examples of additional images we will pass in and compare our output against are shown below. In addition to testing the functionality of our program, we will also test the performance of our program by recording the runtime of each of our filters. There are no exact runtimes we want our filters to achieve. We mainly just want to make sure that all of our filters can process the inputted images in a reasonable amount of time and that the runtimes of the three different Kuwahara implementations make sense, meaning that anisotropic takes longer than circle and circle takes longer than square. We effectively plan to compare the runtimes/performance of applying the filters with the quality of the results outputted. The quality will ultimately be subjective, but we plan to compare the “painterliness” of the results by inspecting how the filters treat edges, detailed regions, color blending, etc.
+In order to test the functionality of our program, we will first apply the filters on the above bird image and metal ornament image and compare our program’s outputs to the above expected filtered images. These will serve as baseline tests to see if our filters are functioning as we expect. Then we will pass in additional images to each of the filters and compare our program’s outputs to the expected filtered images. Some examples of additional images we will pass in and compare our output against are shown below.
+
+<div style="display: flex; justify-content: center">
+    <table style="width: 100%">
+        <tr>
+            <td>
+                <div style="display: flex; justify-content: center">
+                    <figure>
+                        <img
+                            src="./assets/hair_square.png"
+                            width="300px"
+                        />
+                        <figcaption>Square</figcaption>
+                    </figure>
+                </div>
+            </td>
+            <td>
+                <div style="display: flex; justify-content: center">
+                    <figure>
+                        <img
+                            src="./assets/hair_circle.png"
+                            width="300px"
+                        />
+                        <figcaption>Circle</figcaption>
+                    </figure>
+                </div>
+            </td>
+        </tr>
+        <br />
+                <tr>
+            <td>
+                <div style="display: flex; justify-content: center">
+                    <figure>
+                        <img
+                            src="./assets/hair_anisotropic.png"
+                            width="300px"
+                        />
+                        <figcaption>Anisotropic</figcaption>
+                    </figure>
+                </div>
+            </td>
+        </tr>
+        <br />
+    </table>
+</div>
+
+<div style="display: flex; justify-content: center">
+    <table style="width: 100%">
+        <tr>
+            <td>
+                <div style="display: flex; justify-content: center">
+                    <figure>
+                        <img
+                            src="./assets/norse_god_square.png"
+                            width="300px"
+                        />
+                        <figcaption>Square</figcaption>
+                    </figure>
+                </div>
+            </td>
+            <td>
+                <div style="display: flex; justify-content: center">
+                    <figure>
+                        <img
+                            src="./assets/norse_god_circle.png"
+                            width="300px"
+                        />
+                        <figcaption>Circle</figcaption>
+                    </figure>
+                </div>
+            </td>
+        </tr>
+        <br />
+                <tr>
+            <td>
+                <div style="display: flex; justify-content: center">
+                    <figure>
+                        <img
+                            src="./assets/norse_god_anisotropic.png"
+                            width="300px"
+                        />
+                        <figcaption>Anisotropic</figcaption>
+                    </figure>
+                </div>
+            </td>
+        </tr>
+        <br />
+    </table>
+</div>
+
+In addition to testing the functionality of our program, we will also test the performance of our program by recording the runtime of each of our filters. There are no exact runtimes we want our filters to achieve. We mainly just want to make sure that all of our filters can process the inputted images in a reasonable amount of time and that the runtimes of the three different Kuwahara implementations make sense, meaning that anisotropic takes longer than circle and circle takes longer than square. We effectively plan to compare the runtimes/performance of applying the filters with the quality of the results outputted. The quality will ultimately be subjective, but we plan to compare the “painterliness” of the results by inspecting how the filters treat edges, detailed regions, color blending, etc.
+
+If by the third week we have finished implementing the three different Kuwahara filters and the Voronoi filter and have additional time to add onto our project, we hope to also try implementing cel-shading. This will be implemented as an additional filter that the user can choose to apply to their input image. Below are some images that demonstrate what cel-shading should look like.
+
+<div style="display: flex; justify-content: center">
+    <table style="width: 100%">
+        <tr>
+            <td>
+                <div style="display: flex; justify-content: center">
+                    <figure>
+                        <img
+                            src="./assets/astronaut_original_image.png"
+                            width="300px"
+                        />
+                    </figure>
+                </div>
+            </td>
+            <td>
+                <div style="display: flex; justify-content: center">
+                    <figure>
+                        <img
+                            src="./assets/astronaut_cel_shade.png"
+                            width="300px"
+                        />
+                    </figure>
+                </div>
+            </td>
+        </tr>
+        <br />
+    </table>
+</div>
+
+In order to test the functionality of the cel-shading, we will apply cel-shading to the above image of an astronaut and compare our program’s output to the above expected cel-shaded image. If the outputted image looks the same, then we will pass in additional images and compare our program’s outputs for further testing. We will also record the runtime of applying cel-shading and make sure that our program can process images in a reasonable amount of time.
 
 ## Schedule
 
