@@ -41,6 +41,57 @@ For the Kuwahara images, the first image shows the original image of a bird with
 
 For the Voronoi images, the first image shows some sort of metal ornament, and the next image shows the same image but with the Voronoi filter applied. With our program, we hope to achieve these images.
 
+<div style="display: flex; justify-content: center">
+    <table style="width: 100%">
+        <tr>
+            <td>
+                <div style="display: flex; justify-content: center">
+                    <figure>
+                        <img
+                            src="./assets/bird_original_image.png"
+                            width="300px"
+                        />
+                    </figure>
+                </div>
+            </td>
+            <td>
+                <div style="display: flex; justify-content: center">
+                    <figure>
+                        <img
+                            src="./assets/bird_square.png"
+                            width="300px"
+                        />
+                    </figure>
+                </div>
+            </td>
+        </tr>
+        <br />
+        <tr>
+            <td>
+                <div style="display: flex; justify-content: center">
+                    <figure>
+                        <img
+                            src="./assets/bird_circle.png"
+                            width="300px"
+                        />
+                    </figure>
+                </div>
+            </td>
+            <td>
+                <div style="display: flex; justify-content: center">
+                    <figure>
+                        <img
+                            src="./assets/bird_anisotropic.png"
+                            width="300px"
+                        />
+                    </figure>
+                </div>
+            </td>
+        </tr>
+        <br />
+    </table>
+</div>
+
 In order to test the functionality of our program, we will first apply the filters on the above bird image and metal ornament image and compare our program’s outputs to the above expected filtered images. These will serve as baseline tests to see if our filters are functioning as we expect. Then we will pass in additional images to each of the filters and compare our program’s outputs to the expected filtered images. Some examples of additional images we will pass in and compare our output against are shown below. In addition to testing the functionality of our program, we will also test the performance of our program by recording the runtime of each of our filters. There are no exact runtimes we want our filters to achieve. We mainly just want to make sure that all of our filters can process the inputted images in a reasonable amount of time and that the runtimes of the three different Kuwahara implementations make sense, meaning that anisotropic takes longer than circle and circle takes longer than square. We effectively plan to compare the runtimes/performance of applying the filters with the quality of the results outputted. The quality will ultimately be subjective, but we plan to compare the “painterliness” of the results by inspecting how the filters treat edges, detailed regions, color blending, etc.
 
 ## Schedule
