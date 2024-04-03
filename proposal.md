@@ -34,13 +34,6 @@ For our project, we plan to create a program that can take an input image, apply
 
 For the Kuwahara images, the first image shows the original image of a bird with a cowboy hat. The next three images show square Kuwahara filtering, circle Kuwahara filtering, and anisotropic filtering applied on the original image, respectively.
 
-![](./assets/bird_original_image.png)
-![](./assets/bird_square.png)
-![](./assets/bird_circle.png)
-![](./assets/bird_anisotropic.png)
-
-For the Voronoi images, the first image shows some sort of metal ornament, and the next image shows the same image but with the Voronoi filter applied. With our program, we hope to achieve these images.
-
 <div style="display: flex; justify-content: center">
     <table style="width: 100%">
         <tr>
@@ -51,6 +44,7 @@ For the Voronoi images, the first image shows some sort of metal ornament, and t
                             src="./assets/bird_original_image.png"
                             width="300px"
                         />
+                        <figcaption>Original</figcaption>
                     </figure>
                 </div>
             </td>
@@ -61,6 +55,7 @@ For the Voronoi images, the first image shows some sort of metal ornament, and t
                             src="./assets/bird_square.png"
                             width="300px"
                         />
+                        <figcaption>Square</figcaption>
                     </figure>
                 </div>
             </td>
@@ -74,6 +69,7 @@ For the Voronoi images, the first image shows some sort of metal ornament, and t
                             src="./assets/bird_circle.png"
                             width="300px"
                         />
+                        <figcaption>Circle</figcaption>
                     </figure>
                 </div>
             </td>
@@ -84,6 +80,39 @@ For the Voronoi images, the first image shows some sort of metal ornament, and t
                             src="./assets/bird_anisotropic.png"
                             width="300px"
                         />
+                        <figcaption>Anisotropic</figcaption>
+                    </figure>
+                </div>
+            </td>
+        </tr>
+        <br />
+    </table>
+</div>
+
+For the Voronoi images, the first image shows some sort of metal ornament, and the next image shows the same image but with the Voronoi filter applied. With our program, we hope to achieve these images.
+
+<div style="display: flex; justify-content: center">
+    <table style="width: 100%">
+        <tr>
+            <td>
+                <div style="display: flex; justify-content: center">
+                    <figure>
+                        <img
+                            src="./assets/original.png"
+                            width="300px"
+                        />
+                        <figcaption>Original</figcaption>
+                    </figure>
+                </div>
+            </td>
+            <td>
+                <div style="display: flex; justify-content: center">
+                    <figure>
+                        <img
+                            src="./assets/voronoi.png"
+                            width="300px"
+                        />
+                        <figcaption>Square</figcaption>
                     </figure>
                 </div>
             </td>
