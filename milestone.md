@@ -16,9 +16,9 @@ nav_order: 3
 
 ## Progress Summary
 
-To incorporate our filter ideas into the graphics pipeline, we decided to first bind the input image as a texture input to the shader program, and then do all of our filtering color computations in the fragment shader. We decided to set up our program in python, using the `moderngl` and `moderngl-window` packages to execute our shader program and render outputs.
+To incorporate our filter ideas into the graphics pipeline, we decided to first bind the target image as a texture input to the shader program, and then do all of our filtering color computations in the fragment shader. Our program is set up in python, using the `moderngl` and `moderngl-window` packages to execute our shader program and render outputs.
 
-Setting up the project boilerplate and learning how to use the packages took a fair amount of time, but we were able to fully implement both the square and circle variants of the Kuwahara. Our remaining goals remain the same as before - implementing the anisotropic variant of the Kuwahara filter and also the Voronoi filters. We also have a new stretch goal, which is to implement a functioning GUI that allows the user to toggle between different kernel sizes so they can visualize the filters in action.
+Setting up the project boilerplate and learning how to use the packages took a fair amount of time, but we were able to fully implement both the square and circle variants of the Kuwahara. Our remaining goals are the same as before - implementing the anisotropic variant of the Kuwahara filter and also the Voronoi filters. We also have a new stretch goal, which is to create a functioning GUI that allows the user to toggle between different kernel sizes so they can visualize the filters in action.
 
 ### Image Outputs
 
@@ -118,7 +118,7 @@ Boat from the Seattle Chihuly Garden and Glass Exhibit
 
 ## Video
 
-Video Link Here
+[Video Link](https://drive.google.com/file/d/1sLObNYw-nIJ1GNPIj1fNxYOUnrUL1MfX/view?usp=sharing)
 
 ## Presentation
 
