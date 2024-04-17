@@ -12,7 +12,7 @@ nav_order: 3
 {: .no_toc .text-delta }
 
 - TOC
-  {:toc}
+{:toc}
 
 ## Progress Summary
 
@@ -124,4 +124,4 @@ Video Link Here
 
 ## Presentation
 
-Presentation Link Here
+[Presentation Link](https://docs.google.com/presentation/d/1u7DSpc-4jHmdkemrlDypntjhXeuUKlT2smvcd4eiiBs/edit?usp=sharing)
