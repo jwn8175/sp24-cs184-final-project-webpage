@@ -2,6 +2,7 @@
 layout: default
 title: Project Proposal
 parent: Home
+nav_order: 2
 ---
 
 # Project Proposal
