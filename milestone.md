@@ -22,7 +22,7 @@ Setting up the project boilerplate and learning how to use the packages took a f
 
 ### Image Outputs
 
-The images below were all rendered with a filter kernel size of 10.
+Here are some sample images that our current filters produced. The images were all rendered with a filter kernel size of 10.
 
 Jay's Pet Dachshund Coco
 
@@ -115,8 +115,6 @@ Boat from the Seattle Chihuly Garden and Glass Exhibit
         <br />
     </table>
 </div>
-
-### Notable Observations
 
 ## Video
 
