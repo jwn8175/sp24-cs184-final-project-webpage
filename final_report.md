@@ -5,36 +5,41 @@ parent: Home
 nav_order: 4
 ---
 
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
 # Project Final Report
 {: .no_toc }
 
 ## Table of Contents
-{: .no_toc .text-delta }
 
+{: .no_toc .text-delta }
 - TOC
-  {:toc}
+{:toc}
 
 ## Abstract
 
-To incorporate our filter ideas into the graphics pipeline, we decided to first bind the target image as a texture input to the shader program, and then do all of our filtering color computations in the fragment shader. Our program is set up in python, using the `moderngl` and `moderngl-window` packages to execute our shader program and render outputs.
-
-Setting up the project boilerplate and learning how to use the packages took a fair amount of time, but we were able to fully implement both the square and circle variants of the Kuwahara. Our remaining goals are the same as before - implementing the anisotropic variant of the Kuwahara filter and also the Voronoi filters. We also have a new stretch goal, which is to create a functioning GUI that allows the user to toggle between different kernel sizes so they can visualize the filters in action.
+In this project we used shader programming to implement a variety of 2D filtering effects, which we were able to use to render stylized images and videos. We implemented both the Kuwahara and Voronoi filters, each of which has 3 distinct variants.
 
 ## Technical Approach
 
 ### Kuwahara Square
 
+![Kuwahara Square](./final_assets/kuwahara_square_diagram.png)
+
 ### Kuwahara Circle
 
 The circle variant of the Kuwahara filter utilizes a circular shaped kernel instead of a square, based on the technique described by Papari et al. (2007). Additionally, we split the circle into 8 different slices instead of the 4 square quadrants. The motivation behind this technique is that by using a circular kernel and more splits, we can more accurately capture edges in the input image and output less block-shaped artifacts.
 
-![image test](./milestone_assets/boat_original.png)
+![Kuwahara Circle](./final_assets/kuwahara_circle_diagram.png)
 
 Our implementation of the filter is mainly based on the technique described in Kyprianidis et al. (2010), where a polynomial function is used to approximate the Gaussian kernel used when computing the weights in each kernel. By using a polynomial function to approximate the expensive Gaussian, performance is improved significantly. The polynomial function is like so: $$[(x+\zeta) + \eta y^2]^2$$. The value $\zeta$ controls how much the sectors overlap at the filter origin (center pixel in the kernel) and $\eta$ controls how much the sectors overlap at their boundaries. We set our $\zeta$ and $\eta$ values based on recommendations in Kyprianidis et al., which allowed us to approximate the Gaussian.
 
 The most challenging part when implementing this filter is reading and understanding the technique proposed by Kyprianidis et al., especially the mathematics in the paper. Thankfully Acerola’s Youtube video covering the Kuwahara filter helped greatly with the explanations.
 
 ### Kuwahara Anisotropic
+
+![Kuwahara Anisotropic](./final_assets/kuwahara_anisotropic_diagram.png)
 
 ### Voronoi Filter
 
