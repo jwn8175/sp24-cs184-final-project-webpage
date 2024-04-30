@@ -27,6 +27,14 @@ A Voronoi diagram is defined by a set of seed vertices in a 2D space. When appli
 
 ## Technical Approach
 
+### Rendering Pipeline and GUI
+
+For the Python frontend, we predominantly used the `moderngl-window` Python library to process both image and video inputs through the rendering pipeline. With the help of a YouTube video explaining how to apply a filter to an image and an example file on the official `moderngl-window` GitHub repository for playing back videos, we were able to start with the rendering pipeline already created. With this basic infrastructure, we could now input images and videos and render them with default texture sampling with GLSL shader programs.
+
+To improve upon the rendering pipeline, we added command line arguments to parameterize the rendering from the Python files. Additionally, we added keyboard shortcuts to change the `kernel_size` uniform argument to the GLSL shader programs. Both of these features are highly customizable and easy to improve upon.
+
+The majority of our work was spent on the design and development of the following GLSL shader files, where we could just load them into the `moderngl-window` rendering pipeline to see how the filters looked on images and videos of our choice.
+
 ### Kuwahara Square
 
 The square variant of the Kuwahara filter utilizes a square kernel to analyze the surrounding texture pixels to determine each pixel’s color. Surrounding pixels are split into 4 quadrants with dimensions `kernel_size x kernel_size`. Some surrounding pixels are part of multiple quadrants. The pixel we are computing the color for is the center pixel.
@@ -69,42 +77,29 @@ The most challenging part when implementing this filter is reading and understan
 
 ### Kuwahara Anisotropic
 
+The anisotropic variant of the Kuwahara filter functions similarly to the circle (otherwise known as the generalized) variant, with one main adjustment. Pictured below is the filter kernel for the anisotropic variant of the filter:
+
 ![Kuwahara Anisotropic](./final_assets/kuwahara_anisotropic_diagram.png)
+
+As per Kyprianidis et al. (2010) in GPU Pro, the anisotropic variant takes into account the directional edges and features when processing images by changing the axis and orientation of the ellipse kernel.
+
+The “Structure Tensor Calculation” block calculates the structure tensor relative to the current pixel via the horizontal and vertical Sobel filters, with its eigenvectors representing the directional edges around the current pixel. We then linearly apply a Gaussian filter to the tensor to smooth out the directional gradients, and use this tensor to calculate the orientation and anisotropy of the ellipse kernel. Once we have these values, we can apply the same filtering process from the circle variant, only using the newly calculated ellipse kernel instead of the circle kernel.
+
+Much of the implementation of this filter was referenced from and based on the techniques outline in Kyprianidis’ “Image and Video Abstraction by Anisotropic Kuwahara Filtering” paper (2009), and from his chapter on anisotropic filtering from the first edition of GPU Pro (2010), although changes were made when implementing them, such as excluding the precalculated kernel filter, including all shader files in one single file, and using a faster version of the Gaussian blur.
+
+The main issues I faced with this filter were conceptually understanding the role of each filter/process in the rendering pipeline for this filter, and then figuring out how to implement the filter in one single shader file, due to the constraints of our rendering engine/framework. In order to address these issues, I decided to implement each block of the pipeline one at a time, with each in its own shader file in order to debug issues. Once I ascertained the expected results of one filter/operation, I proceeded to the next one in the pipeline. This allowed me to maintain clean, relatively uncluttered code, and made debugging far easier than it would have been had I included everything in one file. Once the individual filters/operations were tested, I began combining them into one shader file. This was a relatively straight-forward process, aside from convoluting the Gaussian filter with the structure tensor, which took some time to debug due to vector dimension errors, and due to attempts to streamline the Gaussian blur by implementing an O(n) blur (by estimating the Gaussian by linear operations) instead of an O(n^2) blur in order to improve performance. I experimented with a few different combinations of blur and kernel sizes for the Gaussian blur in the process, and was able to finalize an effective set of values.
+
+Another challenge I faced was deciding whether or not to implement the pre-calculated filter kernel when implementing the technique outlined in Kyprianidis’ techniques, as the paper only briefly references the kernel, but never cites them explicitly or includes the values for this custom kernel. Due to time constraints, I came to the conclusion that I would not implement any additional weight factors and instead proceed to the filtering portion of the pipeline.
+
+Overall, I gained a lot of experience of GLSL through this project, and learned how to implement a variety of filters, such as the Sobel, Gaussian, and Kuwahara filters. I also learned the importance of optimizing code, thanks to my experience optimizing the Gaussian filter. In the future, I plan on experimenting with frame buffers, which I avoided using in this project due to my lack of experience with them. Including frame buffers should greatly improve the performance of the filter, and should allow for kernel sizes larger than 15 (as increasing the size any further causes incredibly high performance lag). I would also experiment with different parameter values to try to achieve different painterly effects that were unexplored in this project, such as a watercolor effect.
 
 ### Voronoi Filter
 
 The naive implementation of the Voronoi filters is basically a brute-force solution. When loading the shader programs on the CPU, we also use numpy to instantiate an array of randomly generated coordinates in texel (uv space), which we then pass as an uniform to the fragment shader. These random coordinates will serve as the seed vertices for the Voronoi filter. In the fragment shader, we loop through each of these seed vertices and find the closest one to our input texcoord based on one of the three distance metrics (Euclidean, Manhattan, and Chebyshev). Then we simply set the output color of the fragment shader to that color sampled from the chosen seed coordinate. This approach is simple and with the help of the GPU, the speed is not bad as well, despite being brute-force.
 
-```glsl
-void main() {
-    float dist = distance(seeds[0], uv);
-    vec2 chosen_uv = seeds[0];
-
-    for (int i = 1; i < 1000; ++i) {
-        float current = distance(seeds[i], uv);
-        if (current < dist) {
-            chosen_uv = seeds[i];
-            dist = current;
-        }
-    }
-    out_color = texture(tex, chosen_uv);
-}
-```
-
 This approach, while simple, has a big drawback. The amount of seed vertices we are able to pass in as a uniform is hard capped at around 1024. This is simply not a large number of seed vertices, especially if we want our input images to still be recognizable after applying the filter. After some investigating, it turns out OpenGL allows you to pass in uniforms through a buffer when the shader program is instantiated. This buffer allows us to store more data than an uniform array as well, up to 4096 seed vertices. The results from this are slightly more acceptable, but still not very good. Additionally, this still has the same issue with the naive approach, which is that the array size of the passed-in uniforms has to be hardcoded to the same value in both the python driver program and the fragment shaders. That is why we adopted a new approach that did not require us to pass in seed vertices as uniforms.
 
 This new method exploits two key features of OpenGL: instance rendering and the depth buffer. Instance rendering is when we render the same object multiple times, with a different instance variable every time. The depth buffer is used in a depth test to ultimately determine which color will be shown on the screen. Once again we need to instantiate an N-sized array of seed vertices. However, this time we also render N instances of the same quad, each time passing a different seed vertex. We write the distance between input texcoord and seed vertex to the depth buffer and set the output color to the seed vertex. At the very end, the GPU will decide for us what colors need to be rendered based on the depth test. Texcoords will have a large distance from a far-away seed vertex, hence a large depth value and be discarded by the depth test. This technique is inspired from a blog post authored by Nicholas McDonald, where he explains how the depth buffer can be used for generating Voronoi diagrams.
-
-```glsl
-void main() {
-    float dist = distance(vertex_seed, uv);
-    if (dist > r) {
-        discard;
-    }
-    gl_FragDepth = dist;
-    out_color = texture(tex, vertex_seed);
-}
-```
 
 While this new method allows a greatly increased number of seed vertices (I’ve tried up to 2^16 inputs), there is a significant performance trade-off. There are lots of wasted fragments discarded by the depth test. This is slightly improved by defining a variable R that represents some distance in texel space, and calling discard in the fragment shader for distances that exceed this R value.
 
@@ -138,10 +133,6 @@ While this new method allows a greatly increased number of seed vertices (I’ve
 </div>
 
 Overall, implementing the Voronoi filter was very challenging, but yielded satisfying results. We explored and experimented with different features of OpenGL to leverage in our rendering.
-
-### Rendering Pipeline and GUI
-
-Our program is set up in `python`, using the `moderngl` and `moderngl-window` packages to execute our shader program and render outputs. In order to incorporate the input images into the graphics pipeline, we loaded as textures into the program.
 
 ## Results
 
@@ -313,8 +304,8 @@ Ayra Jafri:
 
 ## Video
 
-Video Link Here
+![Video Link](https://drive.google.com/file/d/14Bxm3xxARSB5PiI0dObdbkeFqUQBdfjZ/view?usp=drive_link)
 
 ## Presentation
 
-Presentation Link Here
+![Presentation Link](https://docs.google.com/presentation/d/14M6ixYnE4-cvgBz5RDFQiG_WyFPZaS82OHx0S4KU8-c/edit?usp=sharing)
