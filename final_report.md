@@ -192,7 +192,7 @@ Boat from the Seattle Chihuly Garden and Glass Exhibit
                 <div style="display: flex; justify-content: center">
                     <figure>
                         <img
-                            src="./milestone_assets/boat_original.png"
+                            src="./final_assets/boat_aniso_15.png"
                             width="300px"
                         />
                         <figcaption>Anisotropic</figcaption>
@@ -203,6 +203,12 @@ Boat from the Seattle Chihuly Garden and Glass Exhibit
         <br />
     </table>
 </div>
+
+A Closeup of the Improvement from Circle to Anisotropic
+
+This is a closeup of Coco's ear. On the left is rendered with the circle filter, and on the right is with the anisotropic filter. The edges are way better presevered.
+
+![Circle vs. Anisotropic](./final_assets/circle_vs_aniso.png)
 
 Comparing the Three Voronoi Variants, 10000 Seed Vertices
 
