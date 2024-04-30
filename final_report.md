@@ -145,7 +145,7 @@ Our program is set up in `python`, using the `moderngl` and `moderngl-window` pa
 
 ## Results
 
-A Comparison Between the Square, Circle, and Anisotropic Filters
+### A Comparison Between the Square, Circle, and Anisotropic Filters
 
 Boat from the Seattle Chihuly Garden and Glass Exhibit
 
@@ -204,13 +204,13 @@ Boat from the Seattle Chihuly Garden and Glass Exhibit
     </table>
 </div>
 
-A Closeup of the Improvement from Circle to Anisotropic
+### A Closeup of the Improvement from Circle to Anisotropic
 
 This is a closeup of Coco's ear. On the left is rendered with the circle filter, and on the right is with the anisotropic filter. The edges are way better presevered.
 
 ![Circle vs. Anisotropic](./final_assets/circle_vs_aniso.png)
 
-Comparing the Three Voronoi Variants, 10000 Seed Vertices
+### Comparing the Three Voronoi Variants, 10000 Seed Vertices
 
 Jay's Pet Dachshund Coco
 
@@ -268,6 +268,12 @@ Jay's Pet Dachshund Coco
         <br />
     </table>
 </div>
+
+### Rendering a Video
+
+Rendering a Video Passed Through the Kuwahara Square Filter with Kernel Size of 6
+
+![Kuwahara Video](https://drive.google.com/file/d/16sSuL1s9EwS607cvvYEI5jYr1STQhs4C/view?usp=drive_link)
 
 ## References
 
