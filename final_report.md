@@ -308,7 +308,7 @@ Ayra Jafri: Implemented the Anisotropic Kuwahara filter and the Gaussian blur fi
 
 ## Video
 
-[Video Link](https://drive.google.com/file/d/14Bxm3xxARSB5PiI0dObdbkeFqUQBdfjZ/view?usp=drive_link)
+[Video Link](https://drive.google.com/file/d/10tvnu_j-lLxDkbM6kolVM910ME_zu3Qu/view?usp=sharing)
 
 ## Presentation
 
