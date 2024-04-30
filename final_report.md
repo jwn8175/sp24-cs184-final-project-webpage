@@ -87,6 +87,10 @@ void main() {
 
 This approach, while simple, has a big drawback. The amount of seed vertices we are able to pass in as a uniform is hard capped at around 1024. This is simply not a large number of seed vertices, especially if we want our input images to still be recognizable after applying the filter. After some investigating, it turns out OpenGL allows you to pass in uniforms through a buffer when the shader program is instantiated. This buffer allows us to store more data than an uniform array as well, up to 4096 seed vertices. The results from this are slightly more acceptable, but still not very good. Additionally, this still has the same issue with the naive approach, which is that the array size of the passed-in uniforms has to be hardcoded to the same value in both the python driver program and the fragment shaders. That is why we adopted a new approach that did not require us to pass in seed vertices as uniforms.
 
+![Original](./milestone_assets/boat_original.png)
+
+![Voronoi Naive](./final_assets/voronoi_bad.png)
+
 This new method exploits two key features of OpenGL: instance rendering and the depth buffer. Instance rendering is when we render the same object multiple times, with a different instance variable every time. The depth buffer is used in a depth test to ultimately determine which color will be shown on the screen. Once again we need to instantiate an N-sized array of seed vertices. However, this time we also render N instances of the same quad, each time passing a different seed vertex. We write the distance between input texcoord and seed vertex to the depth buffer and set the output color to the seed vertex. At the very end, the GPU will decide for us what colors need to be rendered based on the depth test. Texcoords will have a large distance from a far-away seed vertex, hence a large depth value and be discarded by the depth test. This technique is inspired from a blog post authored by Nicholas McDonald, where he explains how the depth buffer can be used for generating Voronoi diagrams.
 
 ```glsl
@@ -102,6 +106,8 @@ void main() {
 
 While this new method allows a greatly increased number of seed vertices (I’ve tried up to 2^16 inputs), there is a significant performance trade-off. There are lots of wasted fragments discarded by the depth test. This is slightly improved by defining a variable R that represents some distance in texel space, and calling discard in the fragment shader for distances that exceed this R value.
 
+![Voronoi Naive](./final_assets/voronoi_instanced.png)
+
 Overall, implementing the Voronoi filter was very challenging, but yielded satisfying results. We explored and experimented with different features of OpenGL to leverage in our rendering.
 
 ### Rendering Pipeline and GUI
@@ -109,6 +115,69 @@ Overall, implementing the Voronoi filter was very challenging, but yielded satis
 Our program is set up in `python`, using the `moderngl` and `moderngl-window` packages to execute our shader program and render outputs. In order to incorporate the input images into the graphics pipeline, we loaded as textures into the program.
 
 ## Results
+
+A Comparison Between the Square, Circle, and Anisotropic Filters
+
+Boat from the Seattle Chihuly Garden and Glass Exhibit
+
+<div style="display: flex; justify-content: center">
+    <table style="width: 100%">
+        <tr>
+            <td>
+                <div style="display: flex; justify-content: center">
+                    <figure>
+                        <img
+                            src="./milestone_assets/boat_original.png"
+                            width="300px"
+                        />
+                        <figcaption>Original</figcaption>
+                    </figure>
+                </div>
+            </td>
+            <td>
+                <div style="display: flex; justify-content: center">
+                    <figure>
+                        <img
+                            src="./final_assets/boat_square_15.png"
+                            width="300px"
+                        />
+                        <figcaption>Square</figcaption>
+                    </figure>
+                </div>
+            </td>
+        </tr>
+        <br />
+        <tr>
+            <td>
+                <div style="display: flex; justify-content: center">
+                    <figure>
+                        <img
+                            src="./final_assets/boat_circle_15.png"
+                            width="300px"
+                        />
+                        <figcaption>Circle</figcaption>
+                    </figure>
+                </div>
+            </td>
+            <td>
+                <div style="display: flex; justify-content: center">
+                    <figure>
+                        <img
+                            src="./milestone_assets/boat_original.png"
+                            width="300px"
+                        />
+                        <figcaption>Anisotropic</figcaption>
+                    </figure>
+                </div>
+            </td>
+        </tr>
+        <br />
+    </table>
+</div>
+
+Comparing the Three Voronoi Variants, 10000 Seed Vertices
+
+Jay's Pet Dachshund Coco
 
 <div style="display: flex; justify-content: center">
     <table style="width: 100%">
@@ -128,28 +197,24 @@ Our program is set up in `python`, using the `moderngl` and `moderngl-window` pa
                 <div style="display: flex; justify-content: center">
                     <figure>
                         <img
-                            src="./final_assets/coco_square_5.png"
+                            src="./final_assets/coco_euclidean.png"
                             width="300px"
                         />
-                        <figcaption>Square with ksize = 5</figcaption>
+                        <figcaption>Euclidean Distance</figcaption>
                     </figure>
                 </div>
             </td>
         </tr>
-    </table>
-</div>
-
-<div style="display: flex; justify-content: center">
-    <table style="width: 100%">
-        <tr>
+        <br />
+                <tr>
             <td>
                 <div style="display: flex; justify-content: center">
                     <figure>
                         <img
-                            src="./final_assets/coco_square_10.png"
+                            src="./final_assets/coco_manhattan.png"
                             width="300px"
                         />
-                        <figcaption>Square with ksize = 10</figcaption>
+                        <figcaption>Manhattan Distance</figcaption>
                     </figure>
                 </div>
             </td>
@@ -157,14 +222,15 @@ Our program is set up in `python`, using the `moderngl` and `moderngl-window` pa
                 <div style="display: flex; justify-content: center">
                     <figure>
                         <img
-                            src="./final_assets/coco_square_15.png"
+                            src="./final_assets/coco_chev.png"
                             width="300px"
                         />
-                        <figcaption>Square with ksize = 15</figcaption>
+                        <figcaption>Chebyshev Distance</figcaption>
                     </figure>
                 </div>
             </td>
         </tr>
+        <br />
     </table>
 </div>
 
