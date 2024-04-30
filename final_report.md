@@ -81,7 +81,9 @@ The anisotropic variant of the Kuwahara filter functions similarly to the circle
 
 ![Kuwahara Anisotropic](./final_assets/kuwahara_anisotropic_diagram.png)
 
-As per Kyprianidis et al. (2010) in GPU Pro, the anisotropic variant takes into account the directional edges and features when processing images by changing the axis and orientation of the ellipse kernel.
+As per Kyprianidis et al. (2010) in GPU Pro, the anisotropic variant takes into account the directional edges and features when processing images by changing the axis and orientation of the ellipse kernel. This is achieved through the pipeline pictured below:
+
+![Kuwahara Anisotropic](./final_assets/kuwahara_anisotropic_diagram_2.png)
 
 The “Structure Tensor Calculation” block calculates the structure tensor relative to the current pixel via the horizontal and vertical Sobel filters, with its eigenvectors representing the directional edges around the current pixel. We then linearly apply a Gaussian filter to the tensor to smooth out the directional gradients, and use this tensor to calculate the orientation and anisotropy of the ellipse kernel. Once we have these values, we can apply the same filtering process from the circle variant, only using the newly calculated ellipse kernel instead of the circle kernel.
 
@@ -288,24 +290,26 @@ Rendering a video passed through the Kuwahara filter with a kernel size of 6.
   - <https://www.umsl.edu/~kangh/Papers/kang-tpcg2010.pdf>
   - <https://lisyarus.github.io/blog/posts/blur-coefficients-generator.html>
   - <https://www.taylorfrancis.com/chapters/edit/10.1201/b10648-22/anisotropic-kuwahara-filtering-gpu>
+  - <https://www.kyprianidis.com/p/gpupro/>
+  - <https://www.rastergrid.com/blog/2010/09/efficient-gaussian-blur-with-linear-sampling/>
 
 - Voronoi Filters
   - <https://nickmcd.me/2020/08/01/gpu-accelerated-voronoi/#implementation>
 
 ## Contributions
 
-Jay Ni: Worked on setting up the image rendering pipeline, implemented the Kuwahara circle variant and the Voronoi filters.
+Jay Ni: Worked on setting up the image rendering pipeline, implemented the Kuwahara circle variant and the Voronoi filters. Also put together the project webpages.
 
-Jonathan Wang:
+Jonathan Wang: Set up video rendering pipeline and implemented Kuwahara Square Filter.
 
-Vanessa Qiu:
+Vanessa Qiu: Helped with implementing the Kuwahara circle variant and preparing the final video presentation.
 
-Ayra Jafri:
+Ayra Jafri: Implemented the Anisotropic Kuwahara filter and the Gaussian blur filter.
 
 ## Video
 
-![Video Link](https://drive.google.com/file/d/14Bxm3xxARSB5PiI0dObdbkeFqUQBdfjZ/view?usp=drive_link)
+[Video Link](https://drive.google.com/file/d/14Bxm3xxARSB5PiI0dObdbkeFqUQBdfjZ/view?usp=drive_link)
 
 ## Presentation
 
-![Presentation Link](https://docs.google.com/presentation/d/14M6ixYnE4-cvgBz5RDFQiG_WyFPZaS82OHx0S4KU8-c/edit?usp=sharing)
+[Presentation Link](https://docs.google.com/presentation/d/14M6ixYnE4-cvgBz5RDFQiG_WyFPZaS82OHx0S4KU8-c/edit?usp=sharing)
