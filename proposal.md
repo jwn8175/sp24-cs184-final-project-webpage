@@ -40,7 +40,7 @@ For the Kuwahara images, the first image shows the original image of a bird with
                 <div style="display: flex; justify-content: center">
                     <figure>
                         <img
-                            src="./assets/bird_original_image.png"
+                            src="./proposal_assets/bird_original_image.png"
                             width="300px"
                         />
                         <figcaption>Original</figcaption>
@@ -51,7 +51,7 @@ For the Kuwahara images, the first image shows the original image of a bird with
                 <div style="display: flex; justify-content: center">
                     <figure>
                         <img
-                            src="./assets/bird_square.png"
+                            src="./proposal_assets/bird_square.png"
                             width="300px"
                         />
                         <figcaption>Square</figcaption>
@@ -65,7 +65,7 @@ For the Kuwahara images, the first image shows the original image of a bird with
                 <div style="display: flex; justify-content: center">
                     <figure>
                         <img
-                            src="./assets/bird_circle.png"
+                            src="./proposal_assets/bird_circle.png"
                             width="300px"
                         />
                         <figcaption>Circle</figcaption>
@@ -76,7 +76,7 @@ For the Kuwahara images, the first image shows the original image of a bird with
                 <div style="display: flex; justify-content: center">
                     <figure>
                         <img
-                            src="./assets/bird_anisotropic.png"
+                            src="./proposal_assets/bird_anisotropic.png"
                             width="300px"
                         />
                         <figcaption>Anisotropic</figcaption>
@@ -97,7 +97,7 @@ For the Voronoi images, the first image shows some sort of metal ornament, and t
                 <div style="display: flex; justify-content: center">
                     <figure>
                         <img
-                            src="./assets/original.png"
+                            src="./proposal_assets/original.png"
                             width="300px"
                         />
                     </figure>
@@ -107,7 +107,7 @@ For the Voronoi images, the first image shows some sort of metal ornament, and t
                 <div style="display: flex; justify-content: center">
                     <figure>
                         <img
-                            src="./assets/voronoi.png"
+                            src="./proposal_assets/voronoi.png"
                             width="300px"
                         />
                     </figure>
@@ -127,7 +127,7 @@ In order to test the functionality of our program, we will first apply the filte
                 <div style="display: flex; justify-content: center">
                     <figure>
                         <img
-                            src="./assets/hair_square.png"
+                            src="./proposal_assets/hair_square.png"
                             width="300px"
                         />
                         <figcaption>Square</figcaption>
@@ -138,7 +138,7 @@ In order to test the functionality of our program, we will first apply the filte
                 <div style="display: flex; justify-content: center">
                     <figure>
                         <img
-                            src="./assets/hair_circle.png"
+                            src="./proposal_assets/hair_circle.png"
                             width="300px"
                         />
                         <figcaption>Circle</figcaption>
@@ -152,7 +152,7 @@ In order to test the functionality of our program, we will first apply the filte
                 <div style="display: flex; justify-content: center">
                     <figure>
                         <img
-                            src="./assets/hair_anisotropic.png"
+                            src="./proposal_assets/hair_anisotropic.png"
                             width="300px"
                         />
                         <figcaption>Anisotropic</figcaption>
@@ -171,7 +171,7 @@ In order to test the functionality of our program, we will first apply the filte
                 <div style="display: flex; justify-content: center">
                     <figure>
                         <img
-                            src="./assets/norse_god_square.png"
+                            src="./proposal_assets/norse_god_square.png"
                             width="300px"
                         />
                         <figcaption>Square</figcaption>
@@ -182,7 +182,7 @@ In order to test the functionality of our program, we will first apply the filte
                 <div style="display: flex; justify-content: center">
                     <figure>
                         <img
-                            src="./assets/norse_god_circle.png"
+                            src="./proposal_assets/norse_god_circle.png"
                             width="300px"
                         />
                         <figcaption>Circle</figcaption>
@@ -196,7 +196,7 @@ In order to test the functionality of our program, we will first apply the filte
                 <div style="display: flex; justify-content: center">
                     <figure>
                         <img
-                            src="./assets/norse_god_anisotropic.png"
+                            src="./proposal_assets/norse_god_anisotropic.png"
                             width="300px"
                         />
                         <figcaption>Anisotropic</figcaption>
@@ -219,7 +219,7 @@ If by the third week we have finished implementing the three different Kuwahara 
                 <div style="display: flex; justify-content: center">
                     <figure>
                         <img
-                            src="./assets/astronaut_original_image.png"
+                            src="./proposal_assets/astronaut_original_image.png"
                             width="300px"
                         />
                     </figure>
@@ -229,7 +229,7 @@ If by the third week we have finished implementing the three different Kuwahara 
                 <div style="display: flex; justify-content: center">
                     <figure>
                         <img
-                            src="./assets/astronaut_cel_shade.png"
+                            src="./proposal_assets/astronaut_cel_shade.png"
                             width="300px"
                         />
                     </figure>
