@@ -19,7 +19,7 @@ nav_order: 4
 
 ## Abstract
 
-In this project we used shader programming to implement a variety of 2D filtering effects, which we were able to use to render stylized images and videos. We implemented both the Kuwahara and Voronoi filters, each of which has 3 distinct variants. The Kuwahara filter was originally propose by Michiyoshi Kuwahara, Ph.D. as denoising filter in the 1970s. However, it was quickly realized that this filter actually generates very nice painterly renderings. Many others have iterated and improved upon the filter over the years, but we plan on showcasing three different variants. A Voronoi diagram is defined by a set of seed vertices in a 2D space. When applied to an image as a filter, we take each pixel in the output image and set it to be the same color as the nearest seed vertex. We can use a different distance metric in the computation in order to achieve different effects.
+In this project we used shader programming to implement a variety of 2D filtering effects, which we used to render stylized images and videos. We implemented both the Kuwahara and Voronoi filters, each of which has 3 distinct variants. The Kuwahara filter was originally proposed by Michiyoshi Kuwahara, Ph.D. as denoising filter in the 1970s. However, it was realized that this filter actually generates very nice painterly renderings. Many others have iterated and improved upon the filter over the years, but we plan on showcasing three different variants. A Voronoi diagram is defined by a set of seed vertices in a 2D space. When applied to an image as a filter, we take each pixel in the output image and set it to be the same color as the nearest seed vertex. We can use a different distance metric in the computation in order to achieve different effects. Our project showcases an alternative to generating stylized images and videos without having to manually paint and animate every frame, by utilizing the power of shader programming.
 
 ## Technical Approach
 
@@ -49,7 +49,7 @@ The square variant is the original version of the Kuwahara developed by Kuwahara
 
 ### Kuwahara Circle
 
-The circle variant of the Kuwahara filter utilizes a circular shaped kernel instead of a square, based on the technique described by Papari et al. (2007). Additionally, we split the circle into 8 different slices instead of the 4 square quadrants. The motivation behind this technique is that by using a circular kernel and more splits, we can more accurately capture edges in the input image and output less block-shaped artifacts.
+The circle variant of the Kuwahara filter utilizes a circular shaped kernel instead of a square and splits the circle into 8 different slices, based on the technique described by Papari et al. (2007). The motivation behind this technique is that by using a circular kernel and more splits, we can more accurately capture edges in the input image and output less block-shaped artifacts.
 
 ![Kuwahara Circle](./final_assets/kuwahara_circle_diagram.png)
 
@@ -89,6 +89,17 @@ This approach, while simple, has a big drawback. The amount of seed vertices we 
 
 This new method exploits two key features of OpenGL: instance rendering and the depth buffer. Instance rendering is when we render the same object multiple times, with a different instance variable every time. The depth buffer is used in a depth test to ultimately determine which color will be shown on the screen. Once again we need to instantiate an N-sized array of seed vertices. However, this time we also render N instances of the same quad, each time passing a different seed vertex. We write the distance between input texcoord and seed vertex to the depth buffer and set the output color to the seed vertex. At the very end, the GPU will decide for us what colors need to be rendered based on the depth test. Texcoords will have a large distance from a far-away seed vertex, hence a large depth value and be discarded by the depth test. This technique is inspired from a blog post authored by Nicholas McDonald, where he explains how the depth buffer can be used for generating Voronoi diagrams.
 
+```glsl
+void main() {
+    float dist = distance(vertex_seed, uv);
+    if (dist > r) {
+        discard;
+    }
+    gl_FragDepth = dist;
+    out_color = texture(tex, vertex_seed);
+}
+```
+
 While this new method allows a greatly increased number of seed vertices (I’ve tried up to 2^16 inputs), there is a significant performance trade-off. There are lots of wasted fragments discarded by the depth test. This is slightly improved by defining a variable R that represents some distance in texel space, and calling discard in the fragment shader for distances that exceed this R value.
 
 Overall, implementing the Voronoi filter was very challenging, but yielded satisfying results. We explored and experimented with different features of OpenGL to leverage in our rendering.
@@ -98,6 +109,64 @@ Overall, implementing the Voronoi filter was very challenging, but yielded satis
 Our program is set up in `python`, using the `moderngl` and `moderngl-window` packages to execute our shader program and render outputs. In order to incorporate the input images into the graphics pipeline, we loaded as textures into the program.
 
 ## Results
+
+<div style="display: flex; justify-content: center">
+    <table style="width: 100%">
+        <tr>
+            <td>
+                <div style="display: flex; justify-content: center">
+                    <figure>
+                        <img
+                            src="./milestone_assets/coco_original.png"
+                            width="300px"
+                        />
+                        <figcaption>Original</figcaption>
+                    </figure>
+                </div>
+            </td>
+            <td>
+                <div style="display: flex; justify-content: center">
+                    <figure>
+                        <img
+                            src="./final_assets/coco_square_5.png"
+                            width="300px"
+                        />
+                        <figcaption>Square with ksize = 5</figcaption>
+                    </figure>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div style="display: flex; justify-content: center">
+    <table style="width: 100%">
+        <tr>
+            <td>
+                <div style="display: flex; justify-content: center">
+                    <figure>
+                        <img
+                            src="./final_assets/coco_square_10.png"
+                            width="300px"
+                        />
+                        <figcaption>Square with ksize = 10</figcaption>
+                    </figure>
+                </div>
+            </td>
+            <td>
+                <div style="display: flex; justify-content: center">
+                    <figure>
+                        <img
+                            src="./final_assets/coco_square_15.png"
+                            width="300px"
+                        />
+                        <figcaption>Square with ksize = 15</figcaption>
+                    </figure>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
 
 ## References
 
