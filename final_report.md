@@ -149,6 +149,8 @@ Our program is set up in `python`, using the `moderngl` and `moderngl-window` pa
 
 Boat from the Seattle Chihuly Garden and Glass Exhibit
 
+Look closely at the red ball with dots and lines to the right of the boat to see some differences.
+
 <div style="display: flex; justify-content: center">
     <table style="width: 100%">
         <tr>
@@ -271,11 +273,24 @@ Jay's Pet Dachshund Coco
 
 ### Rendering a Video
 
-Rendering a Video Passed Through the Kuwahara Square Filter with Kernel Size of 6
+Rendering a video passed through the Kuwahara filter with a kernel size of 6.
 
-![Kuwahara Video](https://drive.google.com/file/d/16sSuL1s9EwS607cvvYEI5jYr1STQhs4C/view?usp=drive_link)
+[Kuwahara Video](https://drive.google.com/file/d/16sSuL1s9EwS607cvvYEI5jYr1STQhs4C/view?usp=drive_link)
 
 ## References
+
+- Kuwahara Filters
+
+  - https://youtu.be/LDhN-JK3U9g
+  - https://medium.com/swlh/what-is-a-kuwahara-filter-77921ce286f2
+  - https://cs184.eecs.berkeley.edu/sp24/docs/hw3-1-part-5
+  - https://www.kyprianidis.com/p/pg2009/jkyprian-pg2009.pdf
+  - https://www.umsl.edu/~kangh/Papers/kang-tpcg2010.pdf
+  - https://lisyarus.github.io/blog/posts/blur-coefficients-generator.html
+  - https://www.taylorfrancis.com/chapters/edit/10.1201/b10648-22/anisotropic-kuwahara-filtering-gpu
+
+- Voronoi Filters
+  - https://nickmcd.me/2020/08/01/gpu-accelerated-voronoi/#implementation
 
 ## Video
 
