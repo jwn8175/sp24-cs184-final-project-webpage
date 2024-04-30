@@ -37,7 +37,7 @@ $$s_1=\sum^{n}_{k=1}{x^{2}_{k}}$$
 
 $$\mu = \frac{s_1}{n}$$
 
-$$\sigma^2=\frac{1}{n-1}\cdot\left\( s_2 - \frac{s_1^2}{n} \right\)$$
+$$\sigma^2=\frac{1}{n-1} \cdot \left( s_2 - \frac{s_1^2}{n} \right)$$
 
 Once all mean and variance values are calculated, the mean color from the quadrant with the smallest color variance is used as the color for the pixel. This operation is done on all pixels in a texture.
 
@@ -68,6 +68,22 @@ The most challenging part when implementing this filter is reading and understan
 ### Voronoi Filter
 
 The naive implementation of the Voronoi filters is basically a brute-force solution. When loading the shader programs on the CPU, we also use numpy to instantiate an array of randomly generated coordinates in texel (uv space), which we then pass as an uniform to the fragment shader. These random coordinates will serve as the seed vertices for the Voronoi filter. In the fragment shader, we loop through each of these seed vertices and find the closest one to our input texcoord based on one of the three distance metrics (Euclidean, Manhattan, and Chebyshev). Then we simply set the output color of the fragment shader to that color sampled from the chosen seed coordinate. This approach is simple and with the help of the GPU, the speed is not bad as well, despite being brute-force.
+
+```glsl
+void main() {
+    float dist = distance(seeds[0], uv);
+    vec2 chosen_uv = seeds[0];
+
+    for (int i = 1; i < 1000; ++i) {
+        float current = distance(seeds[i], uv);
+        if (current < dist) {
+            chosen_uv = seeds[i];
+            dist = current;
+        }
+    }
+    out_color = texture(tex, chosen_uv);
+}
+```
 
 This approach, while simple, has a big drawback. The amount of seed vertices we are able to pass in as a uniform is hard capped at around 1024. This is simply not a large number of seed vertices, especially if we want our input images to still be recognizable after applying the filter. After some investigating, it turns out OpenGL allows you to pass in uniforms through a buffer when the shader program is instantiated. This buffer allows us to store more data than an uniform array as well, up to 4096 seed vertices. The results from this are slightly more acceptable, but still not very good. Additionally, this still has the same issue with the naive approach, which is that the array size of the passed-in uniforms has to be hardcoded to the same value in both the python driver program and the fragment shaders. That is why we adopted a new approach that did not require us to pass in seed vertices as uniforms.
 
