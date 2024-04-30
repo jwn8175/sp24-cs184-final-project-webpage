@@ -19,7 +19,11 @@ nav_order: 4
 
 ## Abstract
 
-In this project we used shader programming to implement a variety of 2D filtering effects, which we used to render stylized images and videos. We implemented both the Kuwahara and Voronoi filters, each of which has 3 distinct variants. The Kuwahara filter was originally proposed by Michiyoshi Kuwahara, Ph.D. as denoising filter in the 1970s. However, it was realized that this filter actually generates very nice painterly renderings. Many others have iterated and improved upon the filter over the years, but we plan on showcasing three different variants. A Voronoi diagram is defined by a set of seed vertices in a 2D space. When applied to an image as a filter, we take each pixel in the output image and set it to be the same color as the nearest seed vertex. We can use a different distance metric in the computation in order to achieve different effects. Our project showcases an alternative to generating stylized images and videos without having to manually paint and animate every frame, by utilizing the power of shader programming.
+In this project, we created a software platform for rendering images and videos with a variety of 2D filtering effects designed to mimic a non-photorealistic, painterly appearance. Specifically, we implement 3 variants of both the Kuwahara and Voronoi filters to showcase a broad range of painterly rendering post-processing filters.
+
+The Kuwahara filter was originally proposed by Michiyoshi Kuwahara, Ph.D. as a denoising filter in the 1970s. However, this filter was found to generate very nice painterly renderings, too. Over time, many improvements have been made to the original filter, so we showcase the square, circle, and anisotropic variants.
+
+A Voronoi diagram is defined by a set of seed vertices in a 2D space. When applied to an image as a filter, each pixel is taken in the output image and set to be the same color as the nearest seed vertex. We can use different distance metrics in the computation to achieve a variety of different effects. We utilize an alternative to generating stylized images and videos without manually painting and animating every frame through shader programming. We showcase the Euclidean, Manhattan, and Chebyshev variants.
 
 ## Technical Approach
 
@@ -46,6 +50,8 @@ This works as an edge preserving algorithm because largely homogenous areas are 
 ![Kuwahara Square](./final_assets/kuwahara_square_diagram.png)
 
 The square variant is the original version of the Kuwahara developed by Kuwahara himself. This served as our baseline. Due to how common this implementation is, we did not need to reference any papers and instead could use a simple internet search for implementation details.
+
+As this was the first filter implemented, we ran into strange issues involving image rendering glitching out. This was solved through setting the `vec4` and `mat4` values to 0 in the beginning. We learned the importance of proper variable initialization in GLSL.
 
 ### Kuwahara Circle
 
@@ -87,10 +93,6 @@ void main() {
 
 This approach, while simple, has a big drawback. The amount of seed vertices we are able to pass in as a uniform is hard capped at around 1024. This is simply not a large number of seed vertices, especially if we want our input images to still be recognizable after applying the filter. After some investigating, it turns out OpenGL allows you to pass in uniforms through a buffer when the shader program is instantiated. This buffer allows us to store more data than an uniform array as well, up to 4096 seed vertices. The results from this are slightly more acceptable, but still not very good. Additionally, this still has the same issue with the naive approach, which is that the array size of the passed-in uniforms has to be hardcoded to the same value in both the python driver program and the fragment shaders. That is why we adopted a new approach that did not require us to pass in seed vertices as uniforms.
 
-![Original](./milestone_assets/boat_original.png)
-
-![Voronoi Naive](./final_assets/voronoi_bad.png)
-
 This new method exploits two key features of OpenGL: instance rendering and the depth buffer. Instance rendering is when we render the same object multiple times, with a different instance variable every time. The depth buffer is used in a depth test to ultimately determine which color will be shown on the screen. Once again we need to instantiate an N-sized array of seed vertices. However, this time we also render N instances of the same quad, each time passing a different seed vertex. We write the distance between input texcoord and seed vertex to the depth buffer and set the output color to the seed vertex. At the very end, the GPU will decide for us what colors need to be rendered based on the depth test. Texcoords will have a large distance from a far-away seed vertex, hence a large depth value and be discarded by the depth test. This technique is inspired from a blog post authored by Nicholas McDonald, where he explains how the depth buffer can be used for generating Voronoi diagrams.
 
 ```glsl
@@ -106,7 +108,34 @@ void main() {
 
 While this new method allows a greatly increased number of seed vertices (I’ve tried up to 2^16 inputs), there is a significant performance trade-off. There are lots of wasted fragments discarded by the depth test. This is slightly improved by defining a variable R that represents some distance in texel space, and calling discard in the fragment shader for distances that exceed this R value.
 
-![Voronoi Naive](./final_assets/voronoi_instanced.png)
+<div style="display: flex; justify-content: center">
+    <table style="width: 100%">
+        <tr>
+            <td>
+                <div style="display: flex; justify-content: center">
+                    <figure>
+                        <img
+                            src="./final_assets/voronoi_bad.png"
+                            width="300px"
+                        />
+                        <figcaption>4000 Seed Vertices</figcaption>
+                    </figure>
+                </div>
+            </td>
+            <td>
+                <div style="display: flex; justify-content: center">
+                    <figure>
+                        <img
+                            src="./final_assets/voronoi_instanced.png"
+                            width="300px"
+                        />
+                        <figcaption>10000 Seed Vertices</figcaption>
+                    </figure>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
 
 Overall, implementing the Voronoi filter was very challenging, but yielded satisfying results. We explored and experimented with different features of OpenGL to leverage in our rendering.
 
