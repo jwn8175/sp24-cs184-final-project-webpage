@@ -275,22 +275,41 @@ Jay's Pet Dachshund Coco
 
 Rendering a video passed through the Kuwahara filter with a kernel size of 6.
 
-[Kuwahara Video](https://drive.google.com/file/d/16sSuL1s9EwS607cvvYEI5jYr1STQhs4C/view?usp=drive_link)
+[Original](https://drive.google.com/file/d/1x_PcVsRmxpxhdnSdMfngzS8BkqI76jJz/view?usp=drive_link)
+
+[Kuwahara Filtered](https://drive.google.com/file/d/16sSuL1s9EwS607cvvYEI5jYr1STQhs4C/view?usp=drive_link)
 
 ## References
 
+- Rendering Pipeline
+
+  - <https://moderngl.readthedocs.io/en/5.10.0/>
+  - <https://moderngl-window.readthedocs.io/en/latest/>
+  - <https://www.youtube.com/watch?v=sW56us0ZBEQ>
+  - <https://github.com/moderngl/moderngl-window/blob/master/examples/video.py>
+
 - Kuwahara Filters
 
-  - https://youtu.be/LDhN-JK3U9g
-  - https://medium.com/swlh/what-is-a-kuwahara-filter-77921ce286f2
-  - https://cs184.eecs.berkeley.edu/sp24/docs/hw3-1-part-5
-  - https://www.kyprianidis.com/p/pg2009/jkyprian-pg2009.pdf
-  - https://www.umsl.edu/~kangh/Papers/kang-tpcg2010.pdf
-  - https://lisyarus.github.io/blog/posts/blur-coefficients-generator.html
-  - https://www.taylorfrancis.com/chapters/edit/10.1201/b10648-22/anisotropic-kuwahara-filtering-gpu
+  - <https://youtu.be/LDhN-JK3U9g>
+  - <https://medium.com/swlh/what-is-a-kuwahara-filter-77921ce286f2>
+  - <https://cs184.eecs.berkeley.edu/sp24/docs/hw3-1-part-5>
+  - <https://www.kyprianidis.com/p/pg2009/jkyprian-pg2009.pdf>
+  - <https://www.umsl.edu/~kangh/Papers/kang-tpcg2010.pdf>
+  - <https://lisyarus.github.io/blog/posts/blur-coefficients-generator.html>
+  - <https://www.taylorfrancis.com/chapters/edit/10.1201/b10648-22/anisotropic-kuwahara-filtering-gpu>
 
 - Voronoi Filters
-  - https://nickmcd.me/2020/08/01/gpu-accelerated-voronoi/#implementation
+  - <https://nickmcd.me/2020/08/01/gpu-accelerated-voronoi/#implementation>
+
+## Contributions
+
+Jay Ni: Worked on setting up the image rendering pipeline, implemented the Kuwahara circle variant and the Voronoi filters.
+
+Jonathan Wang:
+
+Vanessa Qiu:
+
+Ayra Jafri:
 
 ## Video
 
