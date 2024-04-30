@@ -12,20 +12,40 @@ nav_order: 4
 {: .no_toc }
 
 ## Table of Contents
-
 {: .no_toc .text-delta }
+
 - TOC
 {:toc}
 
 ## Abstract
 
-In this project we used shader programming to implement a variety of 2D filtering effects, which we were able to use to render stylized images and videos. We implemented both the Kuwahara and Voronoi filters, each of which has 3 distinct variants.
+In this project we used shader programming to implement a variety of 2D filtering effects, which we were able to use to render stylized images and videos. We implemented both the Kuwahara and Voronoi filters, each of which has 3 distinct variants. The Kuwahara filter was originally propose by Michiyoshi Kuwahara, Ph.D. as denoising filter in the 1970s. However, it was quickly realized that this filter actually generates very nice painterly renderings. Many others have iterated and improved upon the filter over the years, but we plan on showcasing three different variants. A Voronoi diagram is defined by a set of seed vertices in a 2D space. When applied to an image as a filter, we take each pixel in the output image and set it to be the same color as the nearest seed vertex. We can use a different distance metric in the computation in order to achieve different effects.
 
 ## Technical Approach
 
 ### Kuwahara Square
 
+The square variant of the Kuwahara filter utilizes a square kernel to analyze the surrounding texture pixels to determine each pixel’s color. Surrounding pixels are split into 4 quadrants with dimensions `kernel_size x kernel_size`. Some surrounding pixels are part of multiple quadrants. The pixel we are computing the color for is the center pixel.
+
+![Kuwahara Square Kernel](./final_assets/kuwahara_square_kernel.webp)
+
+For each quadrant, we compute the mean color and color variance from the image or video texture. Color is represented by illuminance: `illum(R, G, B, W) = 0.2126 * R + 0.7152 * G + 0.0722 * B`. The illuminance mean and variance are computed using `s_1`, `s_2`, and `kernel_size`:
+
+$$s_1=\sum^{n}_{k=1}{x_k}$$
+
+$$s_1=\sum^{n}_{k=1}{x^{2}_{k}}$$
+
+$$\mu = \frac{s_1}{n}$$
+
+$$\sigma^2=\frac{1}{n-1}\cdot\left\( s_2 - \frac{s_1^2}{n} \right\)$$
+
+Once all mean and variance values are calculated, the mean color from the quadrant with the smallest color variance is used as the color for the pixel. This operation is done on all pixels in a texture.
+
+This works as an edge preserving algorithm because largely homogenous areas are blurred while details are still preserved.
+
 ![Kuwahara Square](./final_assets/kuwahara_square_diagram.png)
+
+The square variant is the original version of the Kuwahara developed by Kuwahara himself. This served as our baseline. Due to how common this implementation is, we did not need to reference any papers and instead could use a simple internet search for implementation details.
 
 ### Kuwahara Circle
 
@@ -33,7 +53,11 @@ The circle variant of the Kuwahara filter utilizes a circular shaped kernel inst
 
 ![Kuwahara Circle](./final_assets/kuwahara_circle_diagram.png)
 
-Our implementation of the filter is mainly based on the technique described in Kyprianidis et al. (2010), where a polynomial function is used to approximate the Gaussian kernel used when computing the weights in each kernel. By using a polynomial function to approximate the expensive Gaussian, performance is improved significantly. The polynomial function is like so: $$[(x+\zeta) + \eta y^2]^2$$. The value $\zeta$ controls how much the sectors overlap at the filter origin (center pixel in the kernel) and $\eta$ controls how much the sectors overlap at their boundaries. We set our $\zeta$ and $\eta$ values based on recommendations in Kyprianidis et al., which allowed us to approximate the Gaussian.
+Our implementation of the filter is mainly based on the technique described in Kyprianidis et al. (2010), where a polynomial function is used to approximate the Gaussian kernel used when computing the weights in each kernel. By using a polynomial function to approximate the expensive Gaussian, performance is improved significantly. The polynomial function is like so:
+
+$$[(x+\zeta) + \eta y^2]^2$$
+
+The value $$\zeta$$ controls how much the sectors overlap at the filter origin (center pixel in the kernel) and $$\eta$$ controls how much the sectors overlap at their boundaries. We set our $$\zeta$$ and $$\eta$$ values based on recommendations in Kyprianidis et al., which allowed us to approximate the Gaussian.
 
 The most challenging part when implementing this filter is reading and understanding the technique proposed by Kyprianidis et al., especially the mathematics in the paper. Thankfully Acerola’s Youtube video covering the Kuwahara filter helped greatly with the explanations.
 
@@ -42,8 +66,6 @@ The most challenging part when implementing this filter is reading and understan
 ![Kuwahara Anisotropic](./final_assets/kuwahara_anisotropic_diagram.png)
 
 ### Voronoi Filter
-
-A Voronoi diagram is defined by a set of seed vertices in a 2D space. When applied to an image as a filter, we take each pixel in the output image and set it to be the same color as the nearest seed vertex.
 
 The naive implementation of the Voronoi filters is basically a brute-force solution. When loading the shader programs on the CPU, we also use numpy to instantiate an array of randomly generated coordinates in texel (uv space), which we then pass as an uniform to the fragment shader. These random coordinates will serve as the seed vertices for the Voronoi filter. In the fragment shader, we loop through each of these seed vertices and find the closest one to our input texcoord based on one of the three distance metrics (Euclidean, Manhattan, and Chebyshev). Then we simply set the output color of the fragment shader to that color sampled from the chosen seed coordinate. This approach is simple and with the help of the GPU, the speed is not bad as well, despite being brute-force.
 
@@ -58,6 +80,10 @@ Overall, implementing the Voronoi filter was very challenging, but yielded satis
 ### Rendering Pipeline and GUI
 
 Our program is set up in `python`, using the `moderngl` and `moderngl-window` packages to execute our shader program and render outputs. In order to incorporate the input images into the graphics pipeline, we loaded as textures into the program.
+
+## Results
+
+## References
 
 ## Video
 
