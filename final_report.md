@@ -6,11 +6,9 @@ nav_order: 4
 ---
 
 # Project Final Report
-
 {: .no_toc }
 
 ## Table of Contents
-
 {: .no_toc .text-delta }
 
 - TOC
@@ -32,7 +30,9 @@ The circle variant of the Kuwahara filter utilizes a circular shaped kernel inst
 
 ![image test](./milestone_assets/boat_original.png)
 
-Our implementation of the filter is mainly based on the technique described in Kyprianidis et al. (2010), where a polynomial function is used to approximate the Gaussian kernel used when computing the weights in each kernel. By using a polynomial function to approximate the expensive Gaussian, performance is improved significantly. The most challenging part when implementing this filter is reading and understanding the technique proposed by Kyprianidis et al., especially the mathematics in the paper. Thankfully Acerola’s Youtube video covering the Kuwahara filter helped greatly with the explanations.
+Our implementation of the filter is mainly based on the technique described in Kyprianidis et al. (2010), where a polynomial function is used to approximate the Gaussian kernel used when computing the weights in each kernel. By using a polynomial function to approximate the expensive Gaussian, performance is improved significantly. The polynomial function is like so: $$[(x+\zeta) + \eta y^2]^2$$. The value $\zeta$ controls how much the sectors overlap at the filter origin (center pixel in the kernel) and $\eta$ controls how much the sectors overlap at their boundaries. We set our $\zeta$ and $\eta$ values based on recommendations in Kyprianidis et al., which allowed us to approximate the Gaussian.
+
+The most challenging part when implementing this filter is reading and understanding the technique proposed by Kyprianidis et al., especially the mathematics in the paper. Thankfully Acerola’s Youtube video covering the Kuwahara filter helped greatly with the explanations.
 
 ### Kuwahara Anisotropic
 
@@ -49,8 +49,6 @@ This new method exploits two key features of OpenGL: instance rendering and the 
 While this new method allows a greatly increased number of seed vertices (I’ve tried up to 2^16 inputs), there is a significant performance trade-off. There are lots of wasted fragments discarded by the depth test. This is slightly improved by defining a variable R that represents some distance in texel space, and calling discard in the fragment shader for distances that exceed this R value.
 
 Overall, implementing the Voronoi filter was very challenging, but yielded satisfying results. We explored and experimented with different features of OpenGL to leverage in our rendering.
-
-GUI and Rendering Pipeline: Our program is set up in python, using the moderngl and moderngl-window packages to execute our shader program and render outputs. In order to incorporate the input images into the graphics pipeline, we loaded as textures into the program.
 
 ### Rendering Pipeline and GUI
 
